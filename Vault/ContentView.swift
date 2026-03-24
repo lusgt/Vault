@@ -1,24 +1,18 @@
-//
-//  ContentView.swift
-//  Vault
-//
-//  Created by Dan on 2026/3/24.
-//
-
 import SwiftUI
 
+// ContentView 是路由层：根据 vault 是否解锁，决定显示解锁页还是主界面。
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @Environment(VaultService.self) private var vault
 
-#Preview {
-    ContentView()
+    var body: some View {
+        Group {
+            if vault.isUnlocked {
+                MainView()
+            } else {
+                LockView()
+            }
+        }
+        // 动画切换：解锁 ↔ 锁定
+        .animation(.easeInOut(duration: 0.25), value: vault.isUnlocked)
+    }
 }

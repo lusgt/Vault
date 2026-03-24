@@ -1,0 +1,29 @@
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad
+DerivedData/
+*.xcworkspace
+
+# Build
+build/
+*.build/
+
+# SwiftPM
+.swiftpm/
+Package.resolved
+
+# Secrets / local data
+.env
+.env.*
+*.db
+*.sqlite
+*.sqlite3
+*.vaultbackup
+
+# Logs
+*.log
