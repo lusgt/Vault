@@ -60,7 +60,7 @@ Select the `Vault` target in Xcode and run. Requires macOS 13+ and Xcode 15+.
 - Clipboard auto-clears after a configurable delay; clears immediately on lock or exit
 - Data stored locally at `~/Library/Application Support/Vault/`
 
-See [SECURITY.md](SECURITY.md) for details.
+See [SECURITY_EN.md](SECURITY_EN.md) · [PRIVACY_EN.md](PRIVACY_EN.md) for details.
 
 ---
 

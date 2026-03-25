@@ -60,7 +60,7 @@ open Vault.xcodeproj
 - 剪贴板内容在可配置时间后自动清空，锁定或退出时立即清空
 - 数据存储在本地：`~/Library/Application Support/Vault/`
 
-详见 [SECURITY.md](SECURITY.md)
+详见 [SECURITY.md](SECURITY.md) · [PRIVACY.md](PRIVACY.md)
 
 ---
 
