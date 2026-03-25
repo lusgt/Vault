@@ -4,6 +4,7 @@
 
 Vault is a local-first macOS app for managing sensitive secrets — API tokens, keys, SSH private keys, wallet mnemonics, recovery codes, and more. Everything is encrypted at rest on your device with no cloud dependency.
 
+-「DONT TRUST, VERIFY」
 ---
 
 ## Features
