@@ -2,6 +2,18 @@
 
 [中文](README.md) | **English**
 
+> A local-first macOS app for managing sensitive secrets
+
+![Platform](https://img.shields.io/badge/Platform-macOS%2013%2B-blue)
+![Language](https://img.shields.io/badge/Language-Swift-orange)
+![UI](https://img.shields.io/badge/UI-SwiftUI-purple)
+![Encryption](https://img.shields.io/badge/Encryption-AES--256--GCM-green)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
+[Features](#features) · [Quick Start](#quick-start) · [Data & Security](#data--security) · [Backup & Restore](#backup--restore) · [Project Structure](#project-structure)
+
+---
+
 Vault is a local-first macOS app for managing sensitive secrets — API tokens, keys, SSH private keys, wallet mnemonics, recovery codes, and more. Everything is encrypted at rest on your device with no cloud dependency.
 
 -「DONT TRUST, VERIFY」
@@ -20,28 +32,23 @@ Vault is a local-first macOS app for managing sensitive secrets — API tokens, 
 
 ---
 
-## Requirements
+## Quick Start
 
-- macOS 13 Ventura or later
-- Xcode 15+ (to build)
+**Option 1: Download DMG (recommended)**
 
----
+Go to [Releases](../../releases) and download the latest DMG. Drag it into Applications.
 
-## Build & Run
+On first launch macOS may block the app — right-click → Open → Open again to proceed.
 
-Open `Vault.xcodeproj` in Xcode, select the `Vault` target, and run.
-
-Command-line build (unsigned):
+**Option 2: Build from source**
 
 ```bash
-xcodebuild \
-  -project Vault.xcodeproj \
-  -target Vault \
-  -configuration Debug \
-  -destination 'platform=macOS' \
-  CODE_SIGNING_ALLOWED=NO \
-  build
+git clone https://github.com/lusgt/Vault.git
+cd Vault
+open Vault.xcodeproj
 ```
+
+Select the `Vault` target in Xcode and run. Requires macOS 13+ and Xcode 15+.
 
 ---
 
@@ -51,6 +58,7 @@ xcodebuild \
 - Content and metadata encrypted separately with AES-256-GCM
 - SQLite WAL mode + secure_delete
 - Clipboard auto-clears after a configurable delay; clears immediately on lock or exit
+- Data stored locally at `~/Library/Application Support/Vault/`
 
 See [SECURITY.md](SECURITY.md) for details.
 
@@ -60,7 +68,8 @@ See [SECURITY.md](SECURITY.md) for details.
 
 - Backup files are encrypted binary blobs stored locally
 - Backup password is completely independent from the master password
-- Export or restore a backup at any time from the Settings page
+- Backups are device-independent — restore on any Mac with Vault installed
+- Export or import backups at any time from the Settings page
 
 ---
 

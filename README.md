@@ -2,6 +2,18 @@
 
 **中文** | [English](README_EN.md)
 
+> 本地优先的 macOS 敏感信息管理应用
+
+![Platform](https://img.shields.io/badge/Platform-macOS%2013%2B-blue)
+![Language](https://img.shields.io/badge/Language-Swift-orange)
+![UI](https://img.shields.io/badge/UI-SwiftUI-purple)
+![Encryption](https://img.shields.io/badge/Encryption-AES--256--GCM-green)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
+[功能概览](#功能概览) · [快速开始](#快速开始) · [数据与安全](#数据与安全) · [备份与恢复](#备份与恢复) · [项目结构](#项目结构)
+
+---
+
 Vault 是一款本地优先的 macOS 敏感信息管理应用，专为 API Token、密钥、SSH 私钥、钱包助记词、恢复码等高敏感数据场景设计。所有内容在本地加密存储，不依赖任何云服务。
           
 -「DONT TRUST, VERIFY」
@@ -20,28 +32,23 @@ Vault 是一款本地优先的 macOS 敏感信息管理应用，专为 API Token
 
 ---
 
-## 运行环境
+## 快速开始
 
-- macOS 13 Ventura 及以上
-- Xcode 15+（构建）
+**方式一：下载 DMG（推荐）**
 
----
+前往 [Releases](../../releases) 下载最新版 DMG，拖入 Applications 即可。
 
-## 构建与运行
+首次打开时系统会拦截，右键点击 App → 打开 → 再次点击打开，之后正常使用。
 
-使用 Xcode 打开 `Vault.xcodeproj`，选择 `Vault` target 后直接运行。
-
-命令行构建（不签名）：
+**方式二：自行构建**
 
 ```bash
-xcodebuild \
-  -project Vault.xcodeproj \
-  -target Vault \
-  -configuration Debug \
-  -destination 'platform=macOS' \
-  CODE_SIGNING_ALLOWED=NO \
-  build
+git clone https://github.com/lusgt/Vault.git
+cd Vault
+open Vault.xcodeproj
 ```
+
+用 Xcode 选择 `Vault` target，直接运行即可。需要 macOS 13+ 和 Xcode 15+。
 
 ---
 
@@ -51,6 +58,7 @@ xcodebuild \
 - 内容与元数据分离加密，均使用 AES-256-GCM
 - SQLite WAL 模式 + secure_delete
 - 剪贴板内容在可配置时间后自动清空，锁定或退出时立即清空
+- 数据存储在本地：`~/Library/Application Support/Vault/`
 
 详见 [SECURITY.md](SECURITY.md)
 
@@ -60,7 +68,8 @@ xcodebuild \
 
 - 备份文件为加密二进制格式，保存在本地
 - 备份密码与主密码完全独立
-- 在设置页面可随时导出或恢复备份
+- 备份文件跨设备可用，换电脑后导入即可完整恢复
+- 在设置页面可随时导出或导入备份
 
 ---
 
