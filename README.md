@@ -3,7 +3,8 @@
 **中文** | [English](README_EN.md)
 
 Vault 是一款本地优先的 macOS 敏感信息管理应用，专为 API Token、密钥、SSH 私钥、钱包助记词、恢复码等高敏感数据场景设计。所有内容在本地加密存储，不依赖任何云服务。
-
+          
+-「DONT TRUST, VERIFY」
 ---
 
 ## 功能概览
