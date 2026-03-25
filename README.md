@@ -2,7 +2,7 @@
 
 **中文** | [English](README_EN.md)
 
-> 本地优先的 macOS 敏感信息管理应用
+> 完全本地加密的 macOS 敏感信息管理应用
 
 ![Platform](https://img.shields.io/badge/Platform-macOS%2013%2B-blue)
 ![Language](https://img.shields.io/badge/Language-Swift-orange)
@@ -14,7 +14,7 @@
 
 ---
 
-Vault 是一款本地优先的 macOS 敏感信息管理应用，专为 API Token、密钥、SSH 私钥、钱包助记词、恢复码等高敏感数据场景设计。所有内容在本地加密存储，不依赖任何云服务。
+Vault 是一款完全本地运行的 macOS 敏感信息管理应用，专为 API Token、密钥、SSH 私钥、钱包助记词、恢复码等高敏感数据场景设计。所有内容在本地加密存储，不依赖任何云服务。
           
 -「DONT TRUST, VERIFY」
 ---

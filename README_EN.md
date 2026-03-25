@@ -2,7 +2,7 @@
 
 [中文](README.md) | **English**
 
-> A local-first macOS app for managing sensitive secrets
+> A fully local, encrypted macOS app for managing sensitive secrets
 
 ![Platform](https://img.shields.io/badge/Platform-macOS%2013%2B-blue)
 ![Language](https://img.shields.io/badge/Language-Swift-orange)
@@ -14,7 +14,7 @@
 
 ---
 
-Vault is a local-first macOS app for managing sensitive secrets — API tokens, keys, SSH private keys, wallet mnemonics, recovery codes, and more. Everything is encrypted at rest on your device with no cloud dependency.
+Vault is a fully local macOS app for managing sensitive secrets — API tokens, keys, SSH private keys, wallet mnemonics, recovery codes, and more. Everything is encrypted on your device. No cloud, no sync, no telemetry.
 
 -「DONT TRUST, VERIFY」
 ---
