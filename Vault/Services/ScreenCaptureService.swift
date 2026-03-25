@@ -57,18 +57,19 @@ class ScreenCaptureService {
             config.showsCursor = false
 
             // quartzRect 是全局 CG 坐标（原点在主显示器左上角，Y 向下）
-            // CGDisplayBounds 也是全局 CG 坐标，减去显示器原点得到显示器内偏移
+            // CGDisplayBounds 也是全局 CG 坐标，减去显示器原点得到显示器内偏移（单位：点）
+            // sourceRect 使用显示器的点坐标（逻辑像素），width/height 使用物理像素
             let displayBounds = CGDisplayBounds(display.displayID)
             let localRect = CGRect(
-                x: (quartzRect.minX - displayBounds.minX) * scale,
-                y: (quartzRect.minY - displayBounds.minY) * scale,
-                width:  quartzRect.width  * scale,
-                height: quartzRect.height * scale
+                x: quartzRect.minX - displayBounds.minX,
+                y: quartzRect.minY - displayBounds.minY,
+                width:  quartzRect.width,
+                height: quartzRect.height
             )
             guard localRect.width > 1, localRect.height > 1 else { return nil }
             config.sourceRect = localRect
-            config.width = Int(localRect.width)
-            config.height = Int(localRect.height)
+            config.width = Int(localRect.width * scale)
+            config.height = Int(localRect.height * scale)
 
             let cgImage = try await SCScreenshotManager.captureImage(
                 contentFilter: filter, configuration: config

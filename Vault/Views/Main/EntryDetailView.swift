@@ -15,7 +15,7 @@ struct EntryDetailView: View {
     @State private var showEdit = false
     @State private var showDeleteConfirm = false
     @State private var showCopyConfirm = false
-    @State private var showHighRiskCopyConfirm = false
+    @State private var pendingHighRiskAction: (() -> Void)? = nil
     @State private var copyConfirmMessage = ""
     @State private var errorMessage = ""
     @AppStorage("appLanguage") private var language = "zh"
@@ -51,11 +51,17 @@ struct EntryDetailView: View {
         .sheet(isPresented: $showEdit) {
             EntryFormView(existingEntry: entry) { showEdit = false }
         }
-        .alert(L10n.highRiskTitle(language), isPresented: $showHighRiskCopyConfirm) {
-            Button(L10n.confirmCopy(language), role: .destructive) {
-                if let content = try? vault.decryptContent(entry) { doCopy(content) }
+        .alert(L10n.highRiskTitle(language), isPresented: Binding(
+            get: { pendingHighRiskAction != nil },
+            set: { if !$0 { pendingHighRiskAction = nil } }
+        )) {
+            Button(L10n.proceedAnyway(language), role: .destructive) {
+                pendingHighRiskAction?()
+                pendingHighRiskAction = nil
             }
-            Button(L10n.cancel(language), role: .cancel) {}
+            Button(L10n.cancel(language), role: .cancel) {
+                pendingHighRiskAction = nil
+            }
         } message: {
             Text(L10n.highRiskMessage(language, entry.title))
         }
@@ -349,18 +355,32 @@ struct EntryDetailView: View {
         if revealedContent != nil {
             revealedContent = nil
             revealedNote = nil
+        } else if entry.riskLevel == .high {
+            pendingHighRiskAction = { doRevealText() }
         } else {
-            do {
-                revealedContent = try vault.decryptContent(entry)
-                revealedNote = try vault.decryptNote(entry)
-            } catch {
-                errorMessage = error.localizedDescription
-            }
+            doRevealText()
+        }
+    }
+
+    private func doRevealText() {
+        do {
+            revealedContent = try vault.decryptContent(entry)
+            revealedNote = try vault.decryptNote(entry)
+        } catch {
+            errorMessage = error.localizedDescription
         }
     }
 
     private func revealBinaryContent() {
         errorMessage = ""
+        if entry.riskLevel == .high {
+            pendingHighRiskAction = { doRevealBinary() }
+        } else {
+            doRevealBinary()
+        }
+    }
+
+    private func doRevealBinary() {
         do {
             revealedBinaryData = try vault.decryptBinaryContent(entry)
             revealedNote = try vault.decryptNote(entry)
@@ -370,6 +390,14 @@ struct EntryDetailView: View {
     }
 
     private func exportBinaryData(_ data: Data) {
+        if entry.riskLevel == .high {
+            pendingHighRiskAction = { doExportBinaryData(data) }
+        } else {
+            doExportBinaryData(data)
+        }
+    }
+
+    private func doExportBinaryData(_ data: Data) {
         let panel = NSSavePanel()
         panel.nameFieldStringValue = entry.contentFilename ?? defaultExportFilename
         panel.canCreateDirectories = true
@@ -380,7 +408,7 @@ struct EntryDetailView: View {
             } catch {
                 // 导出失败：在 UI 上显示错误
                 DispatchQueue.main.async {
-                    self.errorMessage = L10n.exportFailedMessage(language, error.localizedDescription)
+                    self.errorMessage = L10n.exportFailedMessage(self.language, error.localizedDescription)
                 }
             }
         }
@@ -397,7 +425,9 @@ struct EntryDetailView: View {
 
     private func copyContent() {
         if entry.riskLevel == .high {
-            showHighRiskCopyConfirm = true
+            pendingHighRiskAction = {
+                if let content = try? vault.decryptContent(entry) { doCopy(content) }
+            }
         } else if let content = revealedContent {
             doCopy(content)
         } else if let content = try? vault.decryptContent(entry) {

@@ -8,6 +8,7 @@ struct SettingsView: View {
     @State private var showBackup = false
     @State private var saveMessage = ""
     @AppStorage("appLanguage") private var language = "zh"
+    @AppStorage("appTheme") private var appTheme = "system"
 
     var body: some View {
         VStack(spacing: 0) {
@@ -59,10 +60,19 @@ struct SettingsView: View {
                     }
                 }
 
+                Section(L10n.appearanceSection(language)) {
+                    Picker(L10n.themeLabel(language), selection: $appTheme) {
+                        Text(L10n.themeSystem(language)).tag("system")
+                        Text(L10n.themeLight(language)).tag("light")
+                        Text(L10n.themeDark(language)).tag("dark")
+                    }
+                    .pickerStyle(.segmented)
+                }
+
                 Section(L10n.languageSection(language)) {
                     Picker(L10n.uiLanguage(language), selection: $language) {
-                        Text(L10n.languageOptionZh(language)).tag("zh")
-                        Text(L10n.languageOptionEn(language)).tag("en")
+                        Text("中文").tag("zh")
+                        Text("English").tag("en")
                     }
                     .pickerStyle(.segmented)
                 }

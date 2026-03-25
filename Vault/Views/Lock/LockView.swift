@@ -12,6 +12,7 @@ struct LockView: View {
     @State private var showRetryHint = false
     @AppStorage("unlockFailCount") private var failCount = 0   // 持久化，重启后不清零
     @State private var capsLockOn = false
+    @State private var capsLockMonitor: Any? = nil
     @AppStorage("appLanguage") private var language = "zh"
 
     private var isFirstTime: Bool { vault.isFirstTime }
@@ -43,10 +44,7 @@ struct LockView: View {
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 280)
                         .onSubmit { handleSubmit() }
-                        .onChange(of: password) { _, _ in
-                            capsLockOn = NSEvent.modifierFlags.contains(.capsLock)
-                            showRetryHint = false
-                        }
+                        .onChange(of: password) { _, _ in showRetryHint = false }
 
                     if isFirstTime {
                         SecureField(L10n.confirmPassword(language), text: $confirmPassword)
@@ -55,15 +53,14 @@ struct LockView: View {
                             .onSubmit { handleSubmit() }
                     }
 
-                    // 大写锁定提示
-                    if capsLockOn {
-                        HStack(spacing: 4) {
-                            Image(systemName: "capslock.fill")
-                            Text(L10n.capsLockOn(language))
-                        }
-                        .font(.caption)
-                        .foregroundStyle(.orange)
+                    // 大写锁定提示（始终占位，避免布局抖动）
+                    HStack(spacing: 4) {
+                        Image(systemName: "capslock.fill")
+                        Text(L10n.capsLockOn(language))
                     }
+                    .font(.caption)
+                    .foregroundStyle(.orange)
+                    .opacity(capsLockOn ? 1 : 0)
 
                     if !errorMessage.isEmpty {
                         Text(errorMessage)
@@ -104,6 +101,16 @@ struct LockView: View {
         .frame(width: 420, height: 480)
         .onAppear {
             capsLockOn = NSEvent.modifierFlags.contains(.capsLock)
+            capsLockMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { event in
+                capsLockOn = event.modifierFlags.contains(.capsLock)
+                return event
+            }
+        }
+        .onDisappear {
+            if let monitor = capsLockMonitor {
+                NSEvent.removeMonitor(monitor)
+                capsLockMonitor = nil
+            }
         }
     }
 

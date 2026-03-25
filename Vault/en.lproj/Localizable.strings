@@ -27,8 +27,11 @@
 "settings.backup" = "Backup";
 "settings.language" = "Language";
 "settings.ui_language" = "UI Language";
-"settings.language_option_zh" = "Chinese / 中文";
-"settings.language_option_en" = "English / 英文";
+"settings.appearance" = "Appearance";
+"settings.theme" = "Theme";
+"settings.theme_system" = "System";
+"settings.theme_light" = "Light";
+"settings.theme_dark" = "Dark";
 "time.minutes" = "%d min";
 "time.seconds" = "%d sec";
 "time.never" = "Never";
@@ -135,6 +138,7 @@
 "detail.high_risk_title" = "High Risk";
 "detail.high_risk_message" = "This item is marked high risk: %@";
 "detail.copy_anyway" = "Copy Anyway";
+"detail.proceed_anyway" = "Proceed Anyway";
 "detail.confirm_delete_title" = "Confirm Delete";
 "detail.confirm_archive_title" = "Confirm Archive";
 "detail.confirm_delete_message" = "This action cannot be undone. Delete?";

@@ -81,8 +81,11 @@ enum L10n {
     static func backupSection(_ lang: String) -> String { localized("settings.backup", lang) }
     static func languageSection(_ lang: String) -> String { localized("settings.language", lang) }
     static func uiLanguage(_ lang: String) -> String { localized("settings.ui_language", lang) }
-    static func languageOptionZh(_ lang: String) -> String { localized("settings.language_option_zh", lang) }
-    static func languageOptionEn(_ lang: String) -> String { localized("settings.language_option_en", lang) }
+    static func appearanceSection(_ lang: String) -> String { localized("settings.appearance", lang) }
+    static func themeLabel(_ lang: String) -> String { localized("settings.theme", lang) }
+    static func themeSystem(_ lang: String) -> String { localized("settings.theme_system", lang) }
+    static func themeLight(_ lang: String) -> String { localized("settings.theme_light", lang) }
+    static func themeDark(_ lang: String) -> String { localized("settings.theme_dark", lang) }
 
     static func min(_ lang: String, _ n: Int) -> String { format("time.minutes", lang, n) }
     static func sec(_ lang: String, _ n: Int) -> String { format("time.seconds", lang, n) }
@@ -204,6 +207,7 @@ enum L10n {
         format("detail.high_risk_message", lang, title)
     }
     static func confirmCopy(_ lang: String) -> String { localized("detail.copy_anyway", lang) }
+    static func proceedAnyway(_ lang: String) -> String { localized("detail.proceed_anyway", lang) }
     static func confirmArchiveTitle(_ lang: String, _ archived: Bool) -> String {
         archived ? localized("detail.confirm_delete_title", lang) : localized("detail.confirm_archive_title", lang)
     }

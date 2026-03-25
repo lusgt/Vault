@@ -7,7 +7,16 @@ struct VaultApp: App {
     @State private var vault = VaultService.shared
     @State private var lockService = LockService.shared
     @AppStorage("appLanguage") private var language = "zh"
+    @AppStorage("appTheme") private var appTheme = "system"
     @NSApplicationDelegateAdaptor private var appDelegate: AppDelegate
+
+    private var preferredColorScheme: ColorScheme? {
+        switch appTheme {
+        case "light": return .light
+        case "dark":  return .dark
+        default:      return nil
+        }
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -15,6 +24,7 @@ struct VaultApp: App {
                 .environment(vault)
                 .environment(lockService)
                 .environment(\.locale, Locale(identifier: language == "en" ? "en" : "zh-Hans"))
+                .preferredColorScheme(preferredColorScheme)
                 .id(language)
         }
         .windowResizability(.contentSize)
