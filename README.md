@@ -78,4 +78,4 @@ Vault/
 
 ## 许可证
 
-版权所有，保留所有权利。未经作者明确许可，不授予公开发布或再分发许可。详见 [LICENSE](LICENSE)。
+本项目基于 [MIT License](LICENSE) 开源，Copyright © 2026 DanL。
