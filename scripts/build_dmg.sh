@@ -23,7 +23,7 @@ rm -rf "${BUILD_DIR}"
 
 xcodebuild \
   -project "${ROOT_DIR}/${PROJECT}" \
-  -target "${TARGET}" \
+  -scheme "${TARGET}" \
   -configuration "${CONFIGURATION}" \
   -destination 'platform=macOS' \
   CODE_SIGNING_ALLOWED=NO \
